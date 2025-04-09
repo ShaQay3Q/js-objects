@@ -13,6 +13,22 @@ const clearInputs = () => {
 
 const movies = [];
 
+const renderMovies = () => {
+	const movieList = document.getElementById("movie-list");
+	if (movies.length === 0) {
+		movieList.classList.remove("visible");
+		return;
+	} else {
+		movieList.classList.add("visible");
+	}
+	movieList.innerHTML = "";
+	movies.forEach((movie) => {
+		const movleElement = document.createElement("li");
+		movleElement.textContent = movie.info.movieTitle;
+		movieList.append(movleElement);
+	});
+};
+
 const addMovieHandler = () => {
 	// Validate input data
 	if (
@@ -31,8 +47,7 @@ const addMovieHandler = () => {
 		id: Math.random(),
 	};
 	movies.push(newMovie);
-	console.log(newMovie);
-	console.log(movies);
+	renderMovies();
 
 	// Reset the fields
 	clearInputs();
