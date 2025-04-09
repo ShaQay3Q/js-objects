@@ -75,13 +75,17 @@ const searchMovieHandler = () => {
 	}
 
 	let founds = movies.filter((movie) => {
-		if (movie.info.movieTitle.toLowerCase().includes(searchText)) {
-			return true;
-		}
+		// if (movie.info.movieTitle.toLowerCase().includes(searchText)) {
+		// 	return true;
+		// }
 
 		// Check all extra properties
 		for (let key in movie.info) {
-			if (movie.info[key].toLowerCase().includes(searchText)) {
+			if (
+				key === movie.info.movieTitle.toLowerCase().includes(searchText) ||
+				key === searchText ||
+				movie.info[key].toLowerCase().includes(searchText)
+			) {
 				return true;
 			}
 		}
