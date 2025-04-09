@@ -4,27 +4,29 @@ const searchBtn = document.getElementById("search-btn");
 const movieTitle = document.getElementById("title");
 const extraName = document.getElementById("extra-name");
 const extraValue = document.getElementById("extra-value");
+const filterInput = document.getElementById("filter-title");
 
 const clearInputs = () => {
 	movieTitle.value = "";
 	extraName.value = "";
 	extraValue.value = "";
+	filterInput.value = "";
 };
 
 const movies = [];
 
-const renderMovies = () => {
+const renderMovies = (movieArr) => {
 	const movieList = document.getElementById("movie-list");
 	if (!movieList) return; // if element is not found
 
 	// movies.length === 0
 	// 	? movieList.classList.remove("visible")
 	// 	: movieList.classList.add("visible");
-	movieList.classList.toggle("visible", movies.length > 0);
+	movieList.classList.toggle("visible", movieArr.length > 0);
 	movieList.innerHTML = "";
 
 	const fragment = document.createDocumentFragment(); // Create a temporary container
-	movies.forEach((movie) => {
+	movieArr.forEach((movie) => {
 		const movieElement = document.createElement("li");
 		// let text = movie.info.movieTitle + " - " + movie.info[extraName.value];
 		// movieElement.textContent = text;
@@ -58,18 +60,41 @@ const addMovieHandler = () => {
 		id: Math.random(),
 	};
 	movies.push(newMovie);
-	renderMovies();
+	renderMovies(movies);
 
 	// Reset the fields
 	clearInputs();
 };
 
-const searchHandler = () => {
-	console.log("search");
+const searchMovieHandler = () => {
+	// Validate input data
+	const searchText = filterInput.value.trim().toLowerCase();
+	if (searchText === "") {
+		renderMovies(movies); // Show all movies if search is empty
+		return;
+	}
+
+	let founds = movies.filter((movie) => {
+		if (movie.info.movieTitle.toLowerCase().includes(searchText)) {
+			return true;
+		}
+
+		// Check all extra properties
+		for (let key in movie.info) {
+			if (movie.info[key].toLowerCase().includes(searchText)) {
+				return true;
+			}
+		}
+
+		return false;
+	});
+	console.log(founds);
+
+	renderMovies(founds);
 };
 
 // Ensure inputs are cleared when the page loads
 window.addEventListener("DOMContentLoaded", clearInputs);
 
 addMovieBtn.addEventListener("click", addMovieHandler);
-searchBtn.addEventListener("click", searchHandler);
+searchBtn.addEventListener("click", searchMovieHandler);
