@@ -26,7 +26,15 @@ const renderMovies = () => {
 	const fragment = document.createDocumentFragment(); // Create a temporary container
 	movies.forEach((movie) => {
 		const movieElement = document.createElement("li");
-		movieElement.textContent = movie.info.movieTitle;
+		// let text = movie.info.movieTitle + " - " + movie.info[extraName.value];
+		// movieElement.textContent = text;
+		let text = movie.info.movieTitle;
+		for (let key in movie.info) {
+			if (key !== "movieTitle") {
+				text = text + ` - ${key}: ${movie.info[key]}`;
+			}
+		}
+		movieElement.textContent = text;
 		fragment.append(movieElement);
 	});
 	movieList.append(fragment);
