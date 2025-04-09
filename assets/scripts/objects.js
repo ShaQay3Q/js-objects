@@ -15,18 +15,21 @@ const movies = [];
 
 const renderMovies = () => {
 	const movieList = document.getElementById("movie-list");
-	if (movies.length === 0) {
-		movieList.classList.remove("visible");
-		return;
-	} else {
-		movieList.classList.add("visible");
-	}
+	if (!movieList) return; // if element is not found
+
+	// movies.length === 0
+	// 	? movieList.classList.remove("visible")
+	// 	: movieList.classList.add("visible");
+	movieList.classList.toggle("visible", movies.length > 0);
 	movieList.innerHTML = "";
+
+	const fragment = document.createDocumentFragment(); // Create a temporary container
 	movies.forEach((movie) => {
-		const movleElement = document.createElement("li");
-		movleElement.textContent = movie.info.movieTitle;
-		movieList.append(movleElement);
+		const movieElement = document.createElement("li");
+		movieElement.textContent = movie.info.movieTitle;
+		fragment.append(movieElement);
 	});
+	movieList.append(fragment);
 };
 
 const addMovieHandler = () => {
