@@ -38,8 +38,9 @@ const renderMovies = (filter = "") => {
 		//! INFO must have same name as one of keys in the Object
 		const { info, ...otherProps } = movie; // ...otherProps => collects the rest and gives a new object
 		console.log(otherProps); // id
-
-		let text = info.movieTitle;
+		const { movieTitle: mTitle } = info; // movieTitle assigns new name to title as property
+		// let text = info.movieTitle;
+		let text = mTitle;
 		for (let key in info) {
 			if (key !== "movieTitle") {
 				text = text + ` - ${key}: ${info[key]}`;
