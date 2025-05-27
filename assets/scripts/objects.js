@@ -35,10 +35,12 @@ const renderMovies = (filter = "") => {
 		const movieElement = document.createElement("li");
 		// let text = movie.info.movieTitle + " - " + movie.info[extraName.value];
 		// movieElement.textContent = text;
-		let text = movie.info.movieTitle;
-		for (let key in movie.info) {
+		//! Obj Destructuring
+		const { info } = movie; // must have same name as one of keys in the Object
+		let text = info.movieTitle;
+		for (let key in info) {
 			if (key !== "movieTitle") {
-				text = text + ` - ${key}: ${movie.info[key]}`;
+				text = text + ` - ${key}: ${info[key]}`;
 			}
 		}
 		movieElement.textContent = text;
