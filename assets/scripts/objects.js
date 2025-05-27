@@ -26,7 +26,6 @@ const renderMovies = (filter = "") => {
 	movieList.innerHTML = "";
 
 	const fragment = document.createDocumentFragment(); // Create a temporary container
-
 	const filteredMovies = !filter
 		? movies
 		: movies.filter((movie) => movie.info.movieTitle.includes(filter));
@@ -36,7 +35,10 @@ const renderMovies = (filter = "") => {
 		// let text = movie.info.movieTitle + " - " + movie.info[extraName.value];
 		// movieElement.textContent = text;
 		//! Obj Destructuring
-		const { info } = movie; // must have same name as one of keys in the Object
+		//! INFO must have same name as one of keys in the Object
+		const { info, ...otherProps } = movie; // ...otherProps => collects the rest and gives a new object
+		console.log(otherProps); // id
+
 		let text = info.movieTitle;
 		for (let key in info) {
 			if (key !== "movieTitle") {
