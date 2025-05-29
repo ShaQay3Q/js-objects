@@ -34,13 +34,19 @@ const renderMovies = (filter = "") => {
 		const movieElement = document.createElement("li");
 		// let text = movie.info.movieTitle + " - " + movie.info[extraName.value];
 		// movieElement.textContent = text;
+		let text = "";
+		//! check if a propertyName exists in an object
+		if (!("info" in movie)) {
+			console.log("inside if");
+			return;
+		}
 		//! Obj Destructuring
 		//! INFO must have same name as one of keys in the Object
 		const { info, ...otherProps } = movie; // ...otherProps => collects the rest and gives a new object
 		console.log(otherProps); // id
 		const { movieTitle: mTitle } = info; // movieTitle assigns new name to title as property
 		// let text = info.movieTitle;
-		let text = mTitle;
+		text = mTitle;
 		for (let key in info) {
 			if (key !== "movieTitle") {
 				text = text + ` - ${key}: ${info[key]}`;
