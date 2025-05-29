@@ -34,7 +34,6 @@ const renderMovies = (filter = "") => {
 		const movieElement = document.createElement("li");
 		// let text = movie.info.movieTitle + " - " + movie.info[extraName.value];
 		// movieElement.textContent = text;
-		let text = "";
 		//! check if a propertyName exists in an object
 		if (!("info" in movie)) {
 			console.log("inside if");
@@ -45,8 +44,15 @@ const renderMovies = (filter = "") => {
 		const { info, ...otherProps } = movie; // ...otherProps => collects the rest and gives a new object
 		console.log(otherProps); // id
 		const { movieTitle: mTitle } = info; // movieTitle assigns new name to title as property
-		// let text = info.movieTitle;
-		text = mTitle;
+		const { getFormattedTitle } = movie;
+
+		let m = movie.getFormattedTitle();
+		console.log("m: " + m);
+
+		console.log("j: " + getFormattedTitle());
+
+		// let text = mTitle;
+		let text = getFormatedTitle();
 		for (let key in info) {
 			if (key !== "movieTitle") {
 				text = text + ` - ${key}: ${info[key]}`;
@@ -69,11 +75,17 @@ const addMovieHandler = () => {
 	}
 
 	const newMovie = {
+		// storing data into an object
 		info: {
 			movieTitle: movieTitle.value,
 			[extraName.value]: extraValue.value,
 		},
 		id: Math.random(),
+		// loginc in the object
+		getFormattedTitle: function () {
+			//! this will only look for the "info" insode this object
+			return this.info.movieTitle.toUpperCase();
+		},
 	};
 	movies.push(newMovie);
 	renderMovies();
